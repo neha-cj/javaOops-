@@ -1,55 +1,39 @@
 import java.util.Scanner;
 
 class Rectangle {
-    private double length;
-    private double width;
+    int length,breadth,perimeter;
 
-    public Rectangle() 
+    void rectangle() 
     {
-        length = 0;
-        width = 0;
+        length = 1;
+        breadth = 2;
+        perimeter = 2*(length+breadth);
+        System.out.print(perimeter);
     }
 
-    public Rectangle(double length, double width)
+    void rectangle(int l,int b)
      {
-        this.length = length;
-        this.width = width;
+        length = l;
+        breadth = b;
+        int perimeter = 2*(length+breadth);
+        System.out.println(perimeter);
     }
 
-    public double calculatePerimeter() 
-    {
     
-        return 2 * (length + width);
-    }
 }
 
-public class perimeter 
-{
-    public static void main(String[] args) 
-    {
-        Scanner scanner = new Scanner(System.in);
-
-        Rectangle rectangle1 = new Rectangle();
-        System.out.println("Enter the length of the first rectangle:");
-        double length1 = scanner.nextDouble();
-        System.out.println("Enter the width of the first rectangle:");
-        double width1 = scanner.nextDouble();
-
-        rectangle1 = new Rectangle(length1, width1);
-
-        Rectangle rectangle2 = new Rectangle();
-        System.out.println("Enter the length of the second rectangle:");
-        double length2 = scanner.nextDouble();
-        System.out.println("Enter the width of the second rectangle:");
-        double width2 = scanner.nextDouble();
-
-        rectangle2 = new Rectangle(length2, width2);
-        double perimeter1 = rectangle1.calculatePerimeter();
-        double perimeter2 = rectangle2.calculatePerimeter();
-
-        System.out.println("Perimeter of the first rectangle: " + perimeter1);
-        System.out.println("Perimeter of the second rectangle: " + perimeter2);
-
-        scanner.close();
-    }
+public class perimeter {
+	public static void main(String[] args){
+	Scanner sc = new Scanner (System.in);
+	int l,b;
+	System.out.println("the length and breadth of racftangle1: (default values) 1 , 2");
+	System.out.println("enter the length and breadth of racftangle2");
+	l= sc.nextInt();
+	b= sc.nextInt();
+	Rectangle obj1 = new Rectangle();
+	Rectangle obj2 = new Rectangle();
+	System.out.print("perimeters of rectangle 1 and rectangle 2 are: ");
+	obj1.rectangle();
+	obj2.rectangle(l,b);
+        }
 }
