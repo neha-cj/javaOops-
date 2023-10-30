@@ -1,59 +1,71 @@
 import java.util.Scanner;
 
-class Patient {
-    private int idNumber;
+class Patient 
+{
+    private int id;
     private int age;
     private String bloodData;
 
-    public Patient() {
-        this.idNumber = 0;
-        this.age = 0;
-        this.bloodData = "0+";
+    // Default constructor
+    public Patient() 
+    {
+        id = 0;
+        age = 0;
+        bloodData = "0/1";
     }
 
-    public Patient(int idNumber, int age, String bloodData) {
-        this.idNumber = idNumber;
+    // Overloaded constructor
+    public Patient(int id, int age, String bloodData) 
+    {
+        this.id = id;
         this.age = age;
         this.bloodData = bloodData;
     }
 
-    public int getIdNumber() {
-        return idNumber;
+    public int getId() 
+    {
+        return id;
     }
 
-    public int getAge() {
+    public int getAge() 
+    {
         return age;
     }
 
-    public String getBloodData() {
+    public String getBloodData() 
+    {
         return bloodData;
     }
 }
 
-class Main {
-    public static void main(String[] args) {
+class testPatient 
+{
+    public static void main(String[] args) 
+    {
+        // Create a patient using the default constructor
+        Patient patient1 = new Patient();
+        System.out.println("Patient 1 - Default Constructor");
+        System.out.println("ID: " + patient1.getId());
+        System.out.println("Age: " + patient1.getAge());
+        System.out.println("Blood Data: " + patient1.getBloodData());
+        System.out.println();
+
+        // Create a patient using the overloaded constructor with user input
         Scanner scanner = new Scanner(System.in);
-
-        // Create a patient object using the overload constructor with user input
-        System.out.println("Enter the patient's ID Number:");
+        System.out.println("Enter the patient's ID:");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-
-        System.out.println("Enter the patient's Age:");
+        System.out.println("Enter the patient's age:");
         int age = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
-
-        System.out.println("Enter the patient's Blood Data:");
+        System.out.println("Enter the patient's blood data (e.g., 'A/B'): ");
         String bloodData = scanner.nextLine();
 
-        Patient patient = new Patient(id, age, bloodData);
+        Patient patient2 = new Patient(id, age, bloodData);
+        System.out.println("\nPatient 2 - Overloaded Constructor");
+        System.out.println("ID: " + patient2.getId());
+        System.out.println("Age: " + patient2.getAge());
+        System.out.println("Blood Data: " + patient2.getBloodData());
 
-        // Display patient information
-        System.out.println("Patient Information:");
-        System.out.println("ID Number: " + patient.getIdNumber());
-        System.out.println("Age: " + patient.getAge());
-        System.out.println("Blood Data: " + patient.getBloodData());
-
-        
+        scanner.close();
     }
 }
