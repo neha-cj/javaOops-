@@ -1,11 +1,14 @@
-public class Palindrome {
+import java.util.Scanner;
+public class palindrome {
     public static void main(String[] args) {
-        String input = "racecar"; // Change this to the string you want to check
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter a string");
+        String s = sc.nextLine();
 
-        if (isPalindrome(input)) {
-            System.out.println("'" + input + "' is a palindrome.");
+        if (isPalindrome(s)) {
+            System.out.println("'" + s + "' is a palindrome.");
         } else {
-            System.out.println("'" + input + "' is not a palindrome.");
+            System.out.println("'" + s + "' is not a palindrome.");
         }
     }
 
@@ -15,13 +18,13 @@ public class Palindrome {
 
         while (i < j) {
             if (str.charAt(i) != str.charAt(j)) {
-                return false; // If characters don't match, it's not a palindrome
+                return false; 
             }
 
             i++;
             j--;
         }
 
-        return true; // If we reach here, it's a palindrome
+        return true; 
     }
 }
