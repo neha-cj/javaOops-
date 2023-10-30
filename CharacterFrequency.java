@@ -1,22 +1,26 @@
+import java.util.Scanner;
 public class CharacterFrequency {
     public static void main(String[] args) {
-        String inputString = "Hello, World!";
-        char targetChar = 'l';
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter a string");
+        String str = sc.nextLine();
+        System.out.println("enter charcter to find");
+        char chr = sc.next().charAt(0);  
 
-        int frequency = findCharacterFrequency(inputString, targetChar);
+        int fre = count(str,chr);
 
-        System.out.println("The character '" + targetChar + "' appears " + frequency + " times in the string.");
+        System.out.println("The character '" + chr+ "' appears " + fre + " times in the string.");
     }
 
-    public static int findCharacterFrequency(String input, char target) {
-        int frequency = 0;
+    public static int count(String str, char chr) {
+        int fre = 0;
 
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == target) {
-                frequency++;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == chr) {
+                fre++;
             }
         }
 
-        return frequency;
+        return fre;
     }
 }
