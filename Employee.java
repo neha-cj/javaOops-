@@ -1,73 +1,80 @@
 import java.util.Scanner;
 
 class Employee {
-    String empName;
-    int empAge;
-    String empGender;
-    String empDesignation;
-    double empSalary;
-    String empAddress;
-    int empId;
+    private int empId;
+    private String empName;
+    private int empAge;
+    private String empGender;
+    private String empDesignation;
+    private double empSalary;
+    private String empAddress;
 
-    public Employee(String empName, int empAge, String empGender, String empDesignation, double empSalary, String empAddress, int empId) {
+    public Employee(int empId, String empName, int empAge, String empGender, String empDesignation, double empSalary, String empAddress) {
+        this.empId = empId;
         this.empName = empName;
         this.empAge = empAge;
         this.empGender = empGender;
         this.empDesignation = empDesignation;
         this.empSalary = empSalary;
         this.empAddress = empAddress;
-        this.empId = empId;
+    }
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public void displayDetails() {
+        System.out.println("Employee ID: " + empId);
+        System.out.println("Employee Name: " + empName);
+        System.out.println("Employee Age: " + empAge);
+        System.out.println("Employee Gender: " + empGender);
+        System.out.println("Employee Designation: " + empDesignation);
+        System.out.println("Employee Salary: $" + empSalary);
+        System.out.println("Employee Address: " + empAddress);
     }
 }
 
-public class Main {
+public class EmployeeDetails {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the number of employees: ");
         int n = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
 
         Employee[] employees = new Employee[n];
 
-        // Read employee details
+        // Initialize employee details
         for (int i = 0; i < n; i++) {
-            System.out.println("Enter details for Employee " + (i + 1) + ":");
-            System.out.print("Name: ");
-            String empName = scanner.nextLine();
-            System.out.print("Age: ");
-            int empAge = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Gender: ");
-            String empGender = scanner.nextLine();
-            System.out.print("Designation: ");
-            String empDesignation = scanner.nextLine();
-            System.out.print("Salary: ");
-            double empSalary = scanner.nextDouble();
-            scanner.nextLine();
-            System.out.print("Address: ");
-            String empAddress = scanner.nextLine();
-            System.out.print("ID: ");
+            System.out.println("Enter details for Employee " + (i + 1));
+            System.out.print("Employee ID: ");
             int empId = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();  // Consume the newline character
+            System.out.print("Employee Name: ");
+            String empName = scanner.nextLine();
+            System.out.print("Employee Age: ");
+            int empAge = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character
+            System.out.print("Employee Gender: ");
+            String empGender = scanner.nextLine();
+            System.out.print("Employee Designation: ");
+            String empDesignation = scanner.nextLine();
+            System.out.print("Employee Salary: ");
+            double empSalary = scanner.nextDouble();
+            scanner.nextLine();  // Consume the newline character
+            System.out.print("Employee Address: ");
+            String empAddress = scanner.nextLine();
 
-            employees[i] = new Employee(empName, empAge, empGender, empDesignation, empSalary, empAddress, empId);
+            employees[i] = new Employee(empId, empName, empAge, empGender, empDesignation, empSalary, empAddress);
         }
 
-        System.out.print("Enter the ID of the employee whose details you want to display: ");
+        System.out.print("Enter the ID of the employee to display details: ");
         int requiredId = scanner.nextInt();
 
-        // Find and display details of the required employee based on their ID
         boolean found = false;
+
         for (Employee employee : employees) {
-            if (employee.empId == requiredId) {
-                System.out.println("Employee Details:");
-                System.out.println("Name: " + employee.empName);
-                System.out.println("Age: " + employee.empAge);
-                System.out.println("Gender: " + employee.empGender);
-                System.out.println("Designation: " + employee.empDesignation);
-                System.out.println("Salary: " + employee.empSalary);
-                System.out.println("Address: " + employee.empAddress);
+            if (employee.getEmpId() == requiredId) {
+                employee.displayDetails();
                 found = true;
                 break;
             }
