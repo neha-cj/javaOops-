@@ -1,34 +1,67 @@
-public class CalculateArea {
+import java.util.Scanner;
 
+public class VariableArea {
     public static void main(String[] args) {
-        System.out.println("Area of a Circle: " + calculateArea("Circle", 5.0));
-        System.out.println("Area of a Rectangle: " + calculateArea("Rectangle", 4.0, 6.0));
-        System.out.println("Area of a Triangle: " + calculateArea("Triangle", 3.0, 4.0));
+        Scanner scanner = new Scanner(System.in);
+        boolean continueCalculations = true;
+        System.out.println("Select a shape to calculate the area:");
+            System.out.println("1. Circle");
+            System.out.println("2. Rectangle");
+            System.out.println("3. Triangle");
+            System.out.println("4. Exit");
+        while (continueCalculations) {
+            
+            System.out.print("Enter your choice (1-4): ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    calculateAndPrintArea("Circle", calculateCircleArea(scanner));
+                    break;
+                case 2:
+                    calculateAndPrintArea("Rectangle", calculateRectangleArea(scanner));
+                    break;
+                case 3:
+                    calculateAndPrintArea("Triangle", calculateTriangleArea(scanner));
+                    break;
+                case 4:
+                    continueCalculations = false;
+                    break;
+                default:
+                    System.err.println("Invalid choice. Please enter a valid option (1-4).");
+            }
+        }
+        scanner.close();
     }
 
-    public static double calculateArea(String shape, double... dimensions) {
-        switch (shape.toLowerCase()) {
-            case "circle":
-                if (dimensions.length == 1) {
-                    double radius = dimensions[0];
-                    return Math.PI * radius * radius;
-                }
-                break;
-            case "rectangle":
-                if (dimensions.length == 2) {
-                    double length = dimensions[0];
-                    double width = dimensions[1];
-                    return length * width;
-                }
-                break;
-            case "triangle":
-                if (dimensions.length == 2) {
-                    double base = dimensions[0];
-                    double height = dimensions[1];
-                    return 0.5 * base * height;
-                }
-                break;
+    private static double calculateCircleArea(Scanner scanner) {
+        System.out.println("Enter the radius:");
+        double radius = scanner.nextDouble();
+        return Math.PI * radius * radius;
+    }
+
+    private static double calculateRectangleArea(Scanner scanner) {
+        System.out.println("Enter the length:");
+        double length = scanner.nextDouble();
+        System.out.println("Enter the width:");
+        double width = scanner.nextDouble();
+        return length * width;
+    }
+
+    private static double calculateTriangleArea(Scanner scanner) {
+        System.out.println("Enter the base:");
+        double base = scanner.nextDouble();
+        System.out.println("Enter the height:");
+        double height = scanner.nextDouble();
+        return 0.5 * base * height;
+    }
+
+    private static void calculateAndPrintArea(String shape, double... dimensions) {
+        double area = 0.0;
+        for (double dimension : dimensions) {
+            area = dimension;
         }
-        return -1; // Invalid input or dimensions
+        System.out.println("Area of " + shape + ": " + area);
     }
 }
