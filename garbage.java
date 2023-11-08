@@ -1,17 +1,37 @@
-import java.util.Scanner;
-class garbage
-{
-public static void main(String args[])
-{
-Runtime r=Runtime.getRuntime();
-long mem1;
-Integer someints[]= new Integer[1000];
-System.out.println("Total memory: "+r.totalMemory());
-mem1=r.freeMemory();
-System.out.println("Initial free memory: "+mem1);
-r.gc();
-mem1=r.freeMemory();
-System.out.println("Final free memory after garbage
-collection: "+mem1);
+public class garbage {
+    public static void main(String[] args) {
+        // Create objects
+        for (int i = 0; i < 5; i++) {
+            new GarbageObject();
+        }
+
+        // Request garbage collection (This doesn't guarantee immediate collection)
+        System.gc();
+
+        // Simulate some work to give the garbage collector time to run
+        for (int i = 0; i < 5; i++) {
+            new GarbageObject();
+        }
+
+        // Request garbage collection again
+        System.gc();
+
+        // Display a message
+        System.out.println("Garbage collection requested. The objects may be collected soon.");
+    }
 }
+
+class GarbageObject {
+    // Constructor
+    public GarbageObject() {
+        // Simulate some resource usage
+        byte[] data = new byte[10];
+    }
+
+   @Override
+    protected void finalize() {
+        System.out.println("Object collected by the garbage collector.");
+    }
 }
+
+
