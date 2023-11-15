@@ -1,42 +1,60 @@
-public class InternetUsers {
-    private static int count = 0;
-    private static int happyCustomers = 0;
-    private final static int MAXTIME = 2; // hours
+import java.util.Scanner;
 
-    private String loginName;
+class InternetUsers 
+{
+    static int count = 0;
+    static int happyCustomers;
+    final static int MAX_TIME = 2;
+    String loginName;
 
-    static {
-        System.out.println("Let's start browsing!");
-        System.out.println("Maximum allotted time for browsing: " + MAXTIME + " hours");
-        happyCustomers = count + 1;
+    public InternetUsers(String loginName) 
+    {
+        this.loginName = loginName;
     }
 
-    public InternetUsers(String loginName) {
-        this.loginName = loginName;
+    static 
+    {
+        System.out.println("Let's start browsing\n");
+        System.out.println("Maximum allotted time for browsing: " + MAX_TIME + " hrs");
+        happyCustomers = count;
+    }
+
+    static void show() 
+    {
+        System.out.println("Number of internet users: " + count);
+        System.out.println("Happy customers: " + happyCustomers);
+    }
+
+    void compute() 
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Are you a happy customer? (yes/no): ");
+        String response = scanner.nextLine().toLowerCase();
+        if (response.equals("yes"))
+        {
+            happyCustomers++;
+            System.out.println("Happy customer: " + loginName);
+        }
         count++;
     }
 
-    public static void show() {
-        System.out.println("Number of internet users: " + count);
-        System.out.println("Number of happy customers: " + happyCustomers);
-    }
+    public static void main(String[] args) 
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of users: ");
+        int numUsers = scanner.nextInt();
+        scanner.nextLine();
 
-    public void compute(boolean isHappy) {
-        if (isHappy) {
-            System.out.println("Happy customer: " + loginName);
-            happyCustomers++;
+        for (int i = 0; i < numUsers; i++) 
+        {
+            System.out.print("Enter login name for user " + (i + 1) + ": ");
+            String loginName = scanner.nextLine();
+            InternetUsers user = new InternetUsers(loginName);
+            user.compute();
         }
-    }
-
-    public static void main(String[] args) {
-        InternetUsers user1 = new InternetUsers("User1");
-        InternetUsers user2 = new InternetUsers("User2");
-        InternetUsers user3 = new InternetUsers("User3");
-
-        user1.compute(true);
-        user2.compute(false);
-        user3.compute(true);
 
         InternetUsers.show();
+        scanner.close();
     }
 }
+
