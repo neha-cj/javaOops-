@@ -12,7 +12,7 @@ class Employee {
 
 class Engineer extends Employee {
     void calcSalary() {
-        super.display(); // Using super keyword to call display() from the base class
+        super.calcSalary(); // Using super keyword to call from base class
         System.out.println("Salary of an engineer is 20000.");
     }
 }
@@ -20,14 +20,24 @@ class Engineer extends Employee {
 public class InheritanceExample {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int choice;
 
-        // Creating an object of Engineer class
-        Engineer engineer = new Engineer();
-        engineer.calcSalary(); // This will invoke calcSalary() of Engineer class
+        do {
+            System.out.println("\nEnter 1 to display Employee salary, 2 to display Engineer salary, or 0 to exit: ");
+            choice = scanner.nextInt();
 
-        // Using the same object to invoke calcSalary() of Employee class
-        engineer.display(); // This will invoke display() of Employee class
-        engineer.calcSalary(); // This will invoke calcSalary() of Engineer class, but display() from Employee class
+            if (choice == 1) {
+                Employee employee = new Employee();
+                employee.display();
+                employee.calcSalary();
+            } else if (choice == 2) {
+                Engineer engineer = new Engineer();
+                engineer.display();
+                engineer.calcSalary();
+            } else if (choice != 0) {
+                System.out.println("Invalid choice!");
+            }
+        } while (choice != 0);
 
         scanner.close();
     }
