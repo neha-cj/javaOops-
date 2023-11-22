@@ -1,14 +1,26 @@
-public class QuickSortExample {
+import java.util.Scanner;
+public class quickSort {
 
     public static void main(String[] args) {
-        // Sample list of names
-        String[] names = {"Alice", "Charlie", "Bob", "Eve", "David"};
+        Scanner s = new Scanner(System.in);
+        int i;
+        System.out.print("Enter the number of strings: ");
+        int n = s.nextInt();
+        s.nextLine(); // Consume the newline
+
+        String[] names = new String[n];
+
+        for (i = 0; i < n; i++) {
+            System.out.print("Enter string " + (i + 1) + ": ");
+            names[i] = s.nextLine();
+        }
+       
 
         System.out.println("Original list of names:");
         printNames(names);
 
-        // Perform QuickSort to sort the names
-        quickSort(names, 0, names.length - 1);
+        
+        quickSort(names, 0, n - 1);
 
         System.out.println("Sorted list of names (in ascending order):");
         printNames(names);
