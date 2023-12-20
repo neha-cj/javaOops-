@@ -1,0 +1,85 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TrafficLightSimulator extends JFrame {
+
+    private JRadioButton redButton, yellowButton, greenButton;
+
+    public TrafficLightSimulator() {
+        super("Traffic Light Simulator");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 400);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
+
+        // Radio buttons for red, yellow, and green lights
+        redButton = new JRadioButton("Red");
+        yellowButton = new JRadioButton("Yellow");
+        greenButton = new JRadioButton("Green");
+
+        // Button group to ensure only one radio button is selected at a time
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(redButton);
+        buttonGroup.add(yellowButton);
+        buttonGroup.add(greenButton);
+
+        // Add action listeners to radio buttons
+        redButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnOnRedLight();
+            }
+        });
+
+        yellowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnOnYellowLight();
+            }
+        });
+
+        greenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnOnGreenLight();
+            }
+        });
+
+        // Add components to the panel
+        panel.add(redButton);
+        panel.add(yellowButton);
+        panel.add(greenButton);
+
+        add(panel);
+    }
+
+    private void turnOnRedLight() {
+        JOptionPane.showMessageDialog(this, "Red Light is On");
+        yellowButton.setSelected(false);
+        greenButton.setSelected(false);
+    }
+
+    private void turnOnYellowLight() {
+        JOptionPane.showMessageDialog(this, "Yellow Light is On");
+        redButton.setSelected(false);
+        greenButton.setSelected(false);
+    }
+
+    private void turnOnGreenLight() {
+        JOptionPane.showMessageDialog(this, "Green Light is On");
+        redButton.setSelected(false);
+        yellowButton.setSelected(false);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new TrafficLightSimulator().setVisible(true);
+            }
+        });
+    }
+}
