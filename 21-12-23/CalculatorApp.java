@@ -3,140 +3,149 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CalculatorApp extends JFrame {
+public class SimpleCalculator extends JFrame implements ActionListener {
+    private JTextField textField;
+    private JButton[] digitButtons;
+    private JButton[] operationButtons;
+    private JButton equalsButton, clearButton;
+    private JPanel panel;
 
-    private JTextField displayField;
-    private double currentResult;
-    private String currentInput;
-    private String lastOperator;
+    private String input = "";
 
-    public CalculatorApp() {
-        super("Simple Calculator");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public SimpleCalculator() {
+        setTitle("Simple Calculator");
         setSize(300, 400);
-        setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        displayField = new JTextField();
-        displayField.setEditable(false);
-        add(displayField, BorderLayout.NORTH);
+        textField = new JTextField();
+        digitButtons = new JButton[10];
+        operationButtons = new JButton[5];
 
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 4));
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 4));
 
-        // Digits 0-9
-        for (int i = 0; i <= 9; i++) {
-            addButton(buttonPanel, String.valueOf(i));
+        for (int i = 0; i < 10; i++) {
+            digitButtons[i] = new JButton(String.valueOf(i));
+            digitButtons[i].addActionListener(this);
         }
 
-        // Operations +, -, *, %
-        addButton(buttonPanel, "+");
-        addButton(buttonPanel, "-");
-        addButton(buttonPanel, "*");
-        addButton(buttonPanel, "%");
+        for (int i = 0; i < 5; i++) {
+            operationButtons[i] = new JButton();
+            operationButtons[i].addActionListener(this);
+        }
 
-        // Equals button
-        JButton equalsButton = new JButton("=");
-        equalsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                calculateResult();
-                lastOperator = null;
-            }
-        });
-        buttonPanel.add(equalsButton);
+        operationButtons[0].setText("+");
+        operationButtons[1].setText("-");
+        operationButtons[2].setText("*");
+        operationButtons[3].setText("/");
+        operationButtons[4].setText("%");
 
-        // Clear button
-        JButton clearButton = new JButton("C");
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearCalculator();
-            }
-        });
-        buttonPanel.add(clearButton);
+        equalsButton = new JButton("=");
+        equalsButton.addActionListener(this);
 
-        add(buttonPanel, BorderLayout.CENTER);
+        clearButton = new JButton("C");
+        clearButton.addActionListener(this);
 
-        // Set up the initial state
-        clearCalculator();
+        panel.add(digitButtons[1]);
+        panel.add(digitButtons[2]);
+        panel.add(digitButtons[3]);
+        panel.add(operationButtons[0]);
+
+        panel.add(digitButtons[4]);
+        panel.add(digitButtons[5]);
+        panel.add(digitButtons[6]);
+        panel.add(operationButtons[1]);
+
+        panel.add(digitButtons[7]);
+        panel.add(digitButtons[8]);
+        panel.add(digitButtons[9]);
+        panel.add(operationButtons[2]);
+
+        panel.add(digitButtons[0]);
+        panel.add(clearButton);
+        panel.add(equalsButton);
+        panel.add(operationButtons[3]);
+
+        add(textField, BorderLayout.NORTH);
+        add(panel);
+
+        setVisible(true);
     }
 
-    private void addButton(Container container, String label) {
-        JButton button = new JButton(label);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleButtonClick(label);
-            }
-        });
-        container.add(button);
-    }
-
-    private void handleButtonClick(String buttonLabel) {
-        if (Character.isDigit(buttonLabel.charAt(0))) {
-            // Digit button pressed
-            currentInput += buttonLabel;
-        } else {
-            // Operation button pressed
-            if (!currentInput.isEmpty()) {
-                calculateResult();
-                lastOperator = buttonLabel;
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == digitButtons[i]) {
+                input += i;
+                textField.setText(input);
             }
         }
 
-        updateDisplay();
-    }
+        if (e.getSource() == operationButtons[0]) {
+            input += "+";
+            textField.setText(input);
+        }
 
-    private void calculateResult() {
-        if (!currentInput.isEmpty() && lastOperator != null) {
+        if (e.getSource() == operationButtons[1]) {
+            input += "-";
+            textField.setText(input);
+        }
+
+        if (e.getSource() == operationButtons[2]) {
+            input += "*";
+            textField.setText(input);
+        }
+
+        if (e.getSource() == operationButtons[3]) {
+            input += "/";
+            textField.setText(input);
+        }
+
+        if (e.getSource() == operationButtons[4]) {
+            input += "%";
+            textField.setText(input);
+        }
+
+        if (e.getSource() == equalsButton) {
             try {
-                double input = Double.parseDouble(currentInput);
-                switch (lastOperator) {
-                    case "+":
-                        currentResult += input;
-                        break;
-                    case "-":
-                        currentResult -= input;
-                        break;
-                    case "*":
-                        currentResult *= input;
-                        break;
-                    case "%":
-                        if (input != 0) {
-                            currentResult %= input;
-                        } else {
-                            throw new ArithmeticException("Cannot divide by zero");
-                        }
-                        break;
-                }
-            } catch (NumberFormatException e) {
-                // Handle invalid input format
-                clearCalculator();
-            } catch (ArithmeticException e) {
-                // Handle divide by zero
-                clearCalculator();
-                displayField.setText("Error: " + e.getMessage());
+                double result = evaluateExpression();
+                textField.setText(String.valueOf(result));
+                input = "";
+            } catch (ArithmeticException ex) {
+                textField.setText("Error");
+                input = "";
             }
-            currentInput = "";
+        }
+
+        if (e.getSource() == clearButton) {
+            input = "";
+            textField.setText("");
         }
     }
 
-    private void clearCalculator() {
-        currentResult = 0;
-        currentInput = "";
-        lastOperator = null;
-        updateDisplay();
-    }
+    private double evaluateExpression() {
+        String[] tokens = input.split("[+\\-*/%]");
+        double operand1 = Double.parseDouble(tokens[0]);
+        double operand2 = Double.parseDouble(tokens[1]);
 
-    private void updateDisplay() {
-        displayField.setText(currentInput.isEmpty() ? String.valueOf(currentResult) : currentInput);
+        if (input.contains("+")) {
+            return operand1 + operand2;
+        } else if (input.contains("-")) {
+            return operand1 - operand2;
+        } else if (input.contains("*")) {
+            return operand1 * operand2;
+        } else if (input.contains("/")) {
+            if (operand2 == 0) {
+                throw new ArithmeticException("Division by zero");
+            }
+            return operand1 / operand2;
+        } else if (input.contains("%")) {
+            return operand1 % operand2;
+        }
+
+        return 0;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new CalculatorApp().setVisible(true);
-            }
-        });
+        new SimpleCalculator();
     }
 }
